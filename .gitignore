@@ -127,3 +127,17 @@ dmypy.json
 
 # Pyre type checker
 .pyre/
+
+#venn
+lib/
+include/
+bin/
+pyvenv.cfg
+
+#Django
+agencia/.env
+agencia/db.sqlite3
+*.log
+*.pot
+*.pyc
+__pycache__/
