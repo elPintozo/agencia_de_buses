@@ -41,7 +41,6 @@ class BusRoute(models.Model):
     bus = models.ForeignKey(Bus, on_delete=models.CASCADE)
     chauffeur = models.ForeignKey(Chauffeur, on_delete=models.CASCADE)
     schedule = models.ForeignKey(Schedule, on_delete=models.CASCADE)
-
     create_date = models.DateTimeField(auto_now_add=True)
 
     class Meta:

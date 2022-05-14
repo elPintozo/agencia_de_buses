@@ -1,4 +1,4 @@
-Pasajero
+Pasajero(Passenger)
 	-rut
 
 Chofer(Chauffeur)
@@ -20,7 +20,7 @@ BusTrayecto(BusRoute)
 	- Chofer_pk (chauffeur)
 	- horario_pk (schedule)
 
-Boleto
-	-numero_asiento
-	-Pasajero_pk
-	-Trayecto_pk
+Boleto(Ticket)
+	-numero_asiento(seat_number)
+	-Pasajero_pk (passenger)
+	-Trayecto_pk (ticket)
