@@ -1,0 +1,27 @@
+Pasajero
+	-rut
+
+Chofer
+	-rut
+
+Bus
+	-patente
+
+Trayecto
+	- nombre
+
+Horario
+	- Día
+	- hora_inicio
+	- hora_llegada
+
+BusTrayecto
+	- Trayecto_pk
+	- Bus_pk
+	- Chofer_pk
+	- horario_pk
+
+Boleto
+	-numero_asiento
+	-Pasajero_pk
+	-Trayecto_pk
