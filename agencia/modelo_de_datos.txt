@@ -1,25 +1,24 @@
 Pasajero
 	-rut
 
-Chofer
-	-rut
+Chofer(Chauffeur)
+	-rut(dni)
 
-Bus
-	-patente
+Bus(Bus)
+	-patente(plate)
 
-Trayecto
-	- nombre
+Trayecto(Route)
+	- nombre(name)
 
-Horario
-	- Día
-	- hora_inicio
-	- hora_llegada
+Horario(Schedule)
+	- hora_inicio (origin_date)
+	- hora_llegada (destination_date)
 
-BusTrayecto
-	- Trayecto_pk
-	- Bus_pk
-	- Chofer_pk
-	- horario_pk
+BusTrayecto(BusRoute)
+	- Trayecto_pk(route)
+	- Bus_pk (bus)
+	- Chofer_pk (chauffeur)
+	- horario_pk (schedule)
 
 Boleto
 	-numero_asiento

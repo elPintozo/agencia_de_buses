@@ -32,7 +32,8 @@ BASE_APPS = [
 ]
 
 LOCAL_APPS = [
-
+    'apps.boleteria',
+    'apps.flota',
 ]
 
 THIRD_APPS = [

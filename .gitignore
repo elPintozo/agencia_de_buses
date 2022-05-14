@@ -141,3 +141,11 @@ agencia/db.sqlite3
 *.pot
 *.pyc
 __pycache__/
+
+# django migrations
+/migrations/
+/migrations/*
+**/migrations/*
+**/migrations/**
+!**/migrations
+!**/migrations/__init__.py
