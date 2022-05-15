@@ -18,3 +18,7 @@ DATABASES = {
 
 # Static files (CSS, JavaScript, Images)
 STATIC_URL = 'static/'
+
+STATICFILES_DIRS = (
+    Path(BASE_DIR).parent / Path('static'),
+)
