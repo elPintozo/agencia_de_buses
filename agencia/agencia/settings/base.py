@@ -37,6 +37,7 @@ LOCAL_APPS = [
 ]
 
 THIRD_APPS = [
+    'rest_framework',
 
 ]
 
