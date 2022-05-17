@@ -1,4 +1,5 @@
 from django.urls import path
+from apps.boleteria import views as view_boleteria
 from apps.boleteria.api import apis as apis_boleteria
 
 app_name='box_office'
@@ -9,4 +10,6 @@ urlpatterns = [
 
     path('api/ticket/list', apis_boleteria.ticket_api_view, name='api-ticket-list'),
     path('api/ticket/detail/<int:pk>/', apis_boleteria.ticket_detail_view, name='api-ticket-detail'),
+
+    path('bus/list/', view_boleteria.ticket_list, name='ticket-list'),
 ]

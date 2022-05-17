@@ -1,0 +1,29 @@
+{% extends 'base.html' %}
+{% load static %}
+
+{% block content %}
+    
+    <table class="table" id='app'>
+        <thead class="thead-dark">
+        <tr>
+            <th scope="col">ID internal</th>
+            <th scope="col">ID external</th>
+            <th scope="col">Route</th>
+            <th scope="col">Create date</th>
+        </tr>
+        </thead>
+        <tbody>
+            <tr v-for="route in route_list" :key="route.id">
+                <th scope="row">{$ route.id $}</th>
+                <td>{$ route.route_id $}</td>
+                <td>{$ route.name $}</td>
+                <td>{$ route.create_date $}</td>
+            </tr>
+        </tbody>
+    </table>
+
+{% endblock content %}
+
+{% block js %}
+    <script src="{% static 'vue/apps/flota/route_list.js' %}" ></script>
+{% endblock js %}

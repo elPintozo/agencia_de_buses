@@ -1,0 +1,31 @@
+{% extends 'base.html' %}
+{% load static %}
+
+{% block content %}
+    
+    <table class="table" id='app'>
+        <thead class="thead-dark">
+        <tr>
+            <th scope="col">ID internal</th>
+            <th scope="col">ID external</th>
+            <th scope="col">Origin date</th>
+            <th scope="col">Destination date</th>
+            <th scope="col">Create date</th>
+        </tr>
+        </thead>
+        <tbody>
+            <tr v-for="schedule in schedule_list" :key="schedule.id">
+                <th scope="row">{$ schedule.id $}</th>
+                <td>{$ schedule.schedule_id $}</td>
+                <td>{$ schedule.origin_date $}</td>
+                <td>{$ schedule.destination_date $}</td>
+                <td>{$ schedule.create_date $}</td>
+            </tr>
+        </tbody>
+    </table>
+
+{% endblock content %}
+
+{% block js %}
+    <script src="{% static 'vue/apps/flota/schedule_list.js' %}" ></script>
+{% endblock js %}

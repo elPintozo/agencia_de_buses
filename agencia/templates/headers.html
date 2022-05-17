@@ -1,9 +1,10 @@
 <header class="d-flex justify-content-center py-3">
     <ul class="nav nav-pills">
-      <li class="nav-item"><a href="#" class="nav-link active" aria-current="page">Home</a></li>
-      <li class="nav-item"><a href="#" class="nav-link">Buses and Chauffeur</a></li>
-      <li class="nav-item"><a href="#" class="nav-link">Routes</a></li>
-      <li class="nav-item"><a href="#" class="nav-link">Schedules</a></li>
-      <li class="nav-item"><a href="#" class="nav-link">Buy Ticket</a></li>
+      <li class="nav-item"><a href="{% url 'home' %}" class="nav-link {% if nav_item == 'home' %}active{% endif %}">Home</a></li>
+      <li class="nav-item"><a href="{% url 'garage:bus-list'%}" class="nav-link {% if nav_item == 'bus' %}active{% endif %}">Buses</a></li>
+      <li class="nav-item"><a href="{% url 'garage:chauffeur-list'%}" class="nav-link {% if nav_item == 'chauffeur' %}active{% endif %}">Chauffeur</a></li>
+      <li class="nav-item"><a href="{% url 'garage:route-list'%}" class="nav-link {% if nav_item == 'route' %}active{% endif %}">Routes</a></li>
+      <li class="nav-item"><a href="{% url 'garage:schedule-list'%}" class="nav-link {% if nav_item == 'schedule' %}active{% endif %}">Schedules</a></li>
+      <li class="nav-item"><a href="{% url 'box_office:ticket-list'%}" class="nav-link {% if nav_item == 'ticket' %}active{% endif %}">Buy Ticket</a></li>
     </ul>
 </header>

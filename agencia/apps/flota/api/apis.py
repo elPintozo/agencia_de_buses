@@ -16,7 +16,7 @@ def chauffeur_api_view(request):
 
     # create
     elif request.method == 'POST':
-        chauffeurs_serializers = serializers.ChauffeurSerializers(data=request.data)
+        chauffeurs_serializers = serializers.ChauffeurSerializersCreate(data=request.data)
         # validation
         if chauffeurs_serializers.is_valid():
             chauffeurs_serializers.save()
@@ -65,7 +65,7 @@ def bus_api_view(request):
 
     # create
     elif request.method == 'POST':
-        buses_serializers = serializers.BusSerializers(data=request.data)
+        buses_serializers = serializers.BusSerializersCreate(data=request.data)
         # validation
         if buses_serializers.is_valid():
             buses_serializers.save()
@@ -114,7 +114,7 @@ def route_api_view(request):
 
     # create
     elif request.method == 'POST':
-        routes_serializers = serializers.RouteSerializers(data=request.data)
+        routes_serializers = serializers.RouteSerializersCreate(data=request.data)
         # validation
         if routes_serializers.is_valid():
             routes_serializers.save()
@@ -162,7 +162,7 @@ def schedule_api_view(request):
 
     # create
     elif request.method == 'POST':
-        schedule_serializers = serializers.ScheduleSerializers(data=request.data)
+        schedule_serializers = serializers.ScheduleSerializersCreate(data=request.data)
         # validation
         if schedule_serializers.is_valid():
             schedule_serializers.save()

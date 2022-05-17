@@ -1,0 +1,29 @@
+{% extends 'base.html' %}
+{% load static %}
+
+{% block content %}
+    
+    <table class="table" id='app'>
+        <thead class="thead-dark">
+        <tr>
+            <th scope="col">ID internal</th>
+            <th scope="col">ID external</th>
+            <th scope="col">DNI</th>
+            <th scope="col">Create date</th>
+        </tr>
+        </thead>
+        <tbody>
+            <tr v-for="chauffeur in chauffeur_list" :key="chauffeur.id">
+                <th scope="row">{$ chauffeur.id $}</th>
+                <td>{$ chauffeur.chauffeur_id $}</td>
+                <td>{$ chauffeur.dni $}</td>
+                <td>{$ chauffeur.create_date $}</td>
+            </tr>
+        </tbody>
+    </table>
+
+{% endblock content %}
+
+{% block js %}
+    <script src="{% static 'vue/apps/flota/chauffeur_list.js' %}" ></script>
+{% endblock js %}
