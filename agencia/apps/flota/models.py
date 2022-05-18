@@ -37,14 +37,17 @@ class Schedule(models.Model):
 
 
 class BusRoute(models.Model):
-    route = models.ForeignKey(Route, on_delete=models.CASCADE)
-    bus = models.ForeignKey(Bus, on_delete=models.CASCADE)
-    chauffeur = models.ForeignKey(Chauffeur, on_delete=models.CASCADE)
-    schedule = models.ForeignKey(Schedule, on_delete=models.CASCADE)
+    route = models.ForeignKey(Route, on_delete=models.CASCADE, null=True)
+    bus = models.ForeignKey(Bus, on_delete=models.CASCADE, null=True)
+    chauffeur = models.ForeignKey(Chauffeur, on_delete=models.CASCADE, null=True)
+    schedule = models.ForeignKey(Schedule, on_delete=models.CASCADE, null=True)
     create_date = models.DateTimeField(auto_now_add=True)
 
     class Meta:
         unique_together = [['route', 'bus', 'chauffeur', 'schedule']]
+    
+    def __str__(self):
+        return f"Route: {self.route}"
 
 def set_chauffeur_id(sender, instance, *args, **kwargs):
     if not instance.chauffeur_id:

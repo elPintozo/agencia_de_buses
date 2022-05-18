@@ -3,6 +3,7 @@ from rest_framework.response import Response
 from rest_framework.decorators import api_view
 
 from apps.flota import models
+from apps.boleteria import models as models_boleteria
 from apps.flota.api import serializers
 
 @api_view(['GET', 'POST'])
@@ -53,7 +54,6 @@ def chauffeur_detail_view(request, pk: int=None):
     else:
         return Response({'message':"Don't found"}, status=status.HTTP_400_BAD_REQUEST)
 
-
 @api_view(['GET', 'POST'])
 def bus_api_view(request):
 
@@ -102,7 +102,6 @@ def bus_detail_view(request, pk: int=None):
     else:
         return Response({'message':"Don't found"}, status=status.HTTP_400_BAD_REQUEST)
 
-
 @api_view(['GET', 'POST'])
 def route_api_view(request):
 
@@ -150,6 +149,96 @@ def route_detail_view(request, pk: int=None):
     
     else:
         return Response({'message':"Don't found"}, status=status.HTTP_400_BAD_REQUEST)
+
+@api_view(['GET'])
+def assing_bus(request, pk: int=None):
+    # queryset
+    route = models.Route.objects.filter(pk=pk).first()
+
+    # validation
+    if route:
+        exclude_buses_list = models.BusRoute.objects.filter(route=route).values_list('bus__plate', flat=True)
+        available_buses = models.Bus.objects.exclude(plate__in=exclude_buses_list)
+        available_buses_serializers = serializers.BusSerializers(available_buses, many=True)
+        return Response(available_buses_serializers.data, status=status.HTTP_200_OK)
+
+    return Response({'message':"Don't route found"}, status=status.HTTP_400_BAD_REQUEST)
+
+@api_view(['GET'])
+def get_assinged_buses(request, pk: int=None):
+    # queryset
+    route = models.Route.objects.filter(pk=pk).first()
+
+    # validation
+    if route:
+        buses_list = models.BusRoute.objects.filter(route=route).values_list('bus__plate', flat=True)
+        assinged_buses = models.Bus.objects.filter(plate__in=buses_list)
+        assinged_buses_serializers = serializers.BusSerializers(assinged_buses, many=True)
+        return Response(assinged_buses_serializers.data, status=status.HTTP_200_OK)
+
+    return Response({'message':"Don't route found"}, status=status.HTTP_400_BAD_REQUEST)
+
+@api_view(['GET'])
+def unassing_bus(request, pk: int=None):
+    # queryset
+    route = models.Route.objects.filter(pk=pk).first()
+
+    # validation
+    if route:
+        buses_list = models.BusRoute.objects.filter(route=route).values_list('bus__plate', flat=True)
+        assinged_buses = models.Bus.objects.filter(plate__in=buses_list)
+        assinged_buses_serializers = serializers.BusSerializers(assinged_buses, many=True)
+        return Response(assinged_buses_serializers.data, status=status.HTTP_200_OK)
+
+    return Response({'message':"Don't route found"}, status=status.HTTP_400_BAD_REQUEST)
+
+@api_view(['POST'])
+def route_add_bus(request):
+
+    # validate keys
+    if 'route' in request.data.keys() and 'buses_selected' in request.data.keys():
+
+        # get instances
+        route = models.Route.objects.filter(pk=int(request.data['route'])).first()
+        buses_selected = models.Bus.objects.filter(pk__in= request.data['buses_selected'])
+
+        # check if route has a assing bus
+        for bus in buses_selected:
+            bus_route = models.BusRoute.objects.filter(route=route, bus=bus)
+            if not bus_route:
+                new_bus_route = models.BusRoute()
+                new_bus_route.bus = bus
+                new_bus_route.route = route
+                new_bus_route.save()
+
+        return Response({'message:':'Assinged'}, status=status.HTTP_200_OK)
+
+    return Response({'message':"Don't route found"}, status=status.HTTP_400_BAD_REQUEST)
+
+@api_view(['POST'])
+def route_remove_bus(request):
+    
+    # validate keys
+    if 'route' in request.data.keys() and 'buses_selected' in request.data.keys():
+
+        # get instances
+        route = models.Route.objects.filter(pk=int(request.data['route'])).first()
+        buses_selected = models.Bus.objects.filter(pk__in= request.data['buses_selected'])
+
+        # check if route has a assing bus
+        for bus in buses_selected:
+            bus_route = models.BusRoute.objects.filter(route=route, bus=bus)
+            if bus_route:
+                bus_route = bus_route.first()
+                bus_route.bus = None
+                if bus_route.chauffeur is None and bus_route.schedule is None:
+                    bus_route.delete()
+                else:
+                    bus_route.save()
+
+        return Response({'message:':'Assinged'}, status=status.HTTP_200_OK)
+
+    return Response({'message':"Don't route found"}, status=status.HTTP_400_BAD_REQUEST)
 
 @api_view(['GET', 'POST'])
 def schedule_api_view(request):

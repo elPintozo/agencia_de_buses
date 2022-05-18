@@ -38,7 +38,6 @@ LOCAL_APPS = [
 
 THIRD_APPS = [
     'rest_framework',
-
 ]
 
 INSTALLED_APPS = BASE_APPS + LOCAL_APPS + THIRD_APPS
@@ -99,6 +98,12 @@ AUTH_PASSWORD_VALIDATORS = [
 
 # Internationalization
 # https://docs.djangoproject.com/en/4.0/topics/i18n/
+
+DATETIME_INPUT_FORMATS =[
+    '%Y-%m-%d %H:%M:%S',
+]
+
+USE_L10N = True
 
 LANGUAGE_CODE = 'en-us'
 

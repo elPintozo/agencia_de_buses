@@ -9,6 +9,7 @@ class ChauffeurSerializersCreate(serializers.ModelSerializer):
         fields = ['dni',]
 
 class ChauffeurSerializers(serializers.ModelSerializer):
+    create_date = serializers.DateTimeField(format="%Y-%m-%d %H:%M:%S")
     class Meta:
         model = models.Chauffeur
         fields = '__all__'
@@ -19,6 +20,7 @@ class BusSerializersCreate(serializers.ModelSerializer):
         fields = ['plate',]
 
 class BusSerializers(serializers.ModelSerializer):
+    #create_date = serializers.DateTimeField(format="%Y-%m-%d %H:%M:%S")
     class Meta:
         model = models.Bus
         fields = '__all__'
@@ -26,9 +28,10 @@ class BusSerializers(serializers.ModelSerializer):
 class RouteSerializersCreate(serializers.ModelSerializer):
     class Meta:
         model = models.Route
-        fields = ['name',]
+        fields = ['name', 'create_date',]
 
 class RouteSerializers(serializers.ModelSerializer):
+    create_date = serializers.DateTimeField(format="%Y-%m-%d %H:%M:%S")
     class Meta:
         model = models.Route
         fields = '__all__'
@@ -39,11 +42,13 @@ class ScheduleSerializersCreate(serializers.ModelSerializer):
         fields = ['origin_date', 'destination_date',]
 
 class ScheduleSerializers(serializers.ModelSerializer):
+    create_date = serializers.DateTimeField(format="%Y-%m-%d %H:%M:%S")
     class Meta:
         model = models.Schedule
         fields = '__all__'
 
 class BusRouteSerializers(serializers.ModelSerializer):
+    create_date = serializers.DateTimeField(format="%Y-%m-%d %H:%M:%S")
     class Meta:
         model = models.BusRoute
         fields = '__all__'
