@@ -13,7 +13,7 @@ copy the key generate with the next command
 
 - openssl rand -base64 32 
 - nano .env
-- 
+
 paste the key in the line number three and write True in the line number six.
 Save data and close file.
 
@@ -47,16 +47,16 @@ Now you can back to the main page and click Buses tab and see the list of buses.
 You need to repeat this example for Chauffeur, Route and Schedule
 
 Link: http://127.0.0.1:8000/garage/api/chauffeur/list
-example 1: {"dni":"1111111-1"}
-example 2: {"dni":"2222222-2"}
+  - example 1: {"dni":"1111111-1"}
+  - example 2: {"dni":"2222222-2"}
 
 Link: http://127.0.0.1:8000/garage/api/route/list
-example 1:{"name":"Santiago-Rancagua"}
-example 2:{"name":"Rancagua-Santiago"}
+  - example 1:{"name":"Santiago-Rancagua"}
+  - example 2:{"name":"Rancagua-Santiago"}
 
 Link: http://127.0.0.1:8000/garage/api/schedule/list
-example 1:{"origin_date":"2022-05-20 15:00:00", "destination_date":"2022-05-20 20:30:00"}
-example 2:{"origin_date":"2022-05-21 08:00:00", "destination_date":"2022-05-21 09:30:00"}
+  - example 1:{"origin_date":"2022-05-20 15:00:00", "destination_date":"2022-05-20 20:30:00"}
+  - example 2:{"origin_date":"2022-05-21 08:00:00", "destination_date":"2022-05-21 09:30:00"}
 
 You have already generated enough information to make a trip.
 
