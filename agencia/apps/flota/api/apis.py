@@ -108,12 +108,16 @@ def chauffeur_add_route(request):
 
         # check if route has a assing chauffeur
         for route in selected_route:
-            bus_route = models.BusRoute.objects.filter(chauffeur=chauffeur, route=route)
+            bus_route = models.BusRoute.objects.filter(route=route)
             if not bus_route:
                 new_bus_route = models.BusRoute()
                 new_bus_route.chauffeur = chauffeur
                 new_bus_route.route = route
                 new_bus_route.save()
+            else:
+                bus_route = bus_route.first()
+                bus_route.chauffeur = chauffeur
+                bus_route.save()
 
         return Response({'message:':'Assinged'}, status=status.HTTP_200_OK)
 
@@ -294,12 +298,16 @@ def route_add_bus(request):
 
         # check if route has a assing bus
         for bus in buses_selected:
-            bus_route = models.BusRoute.objects.filter(route=route, bus=bus)
+            bus_route = models.BusRoute.objects.filter(route=route)
             if not bus_route:
                 new_bus_route = models.BusRoute()
                 new_bus_route.bus = bus
                 new_bus_route.route = route
                 new_bus_route.save()
+            else:
+                bus_route = bus_route.first()
+                bus_route.bus = bus
+                bus_route.save()
 
         return Response({'message:':'Assinged'}, status=status.HTTP_200_OK)
 
@@ -432,12 +440,17 @@ def schedule_add_route(request):
 
         # check if route has a assing schedule
         for route in selected_route:
-            bus_route = models.BusRoute.objects.filter(schedule=schedule, route=route)
+            bus_route = models.BusRoute.objects.filter(route=route)
             if not bus_route:
                 new_bus_route = models.BusRoute()
                 new_bus_route.schedule = schedule
                 new_bus_route.route = route
                 new_bus_route.save()
+            else:
+                bus_route = bus_route.first()
+                bus_route.schedule = schedule
+                bus_route.save()
+
 
         return Response({'message:':'Assinged'}, status=status.HTTP_200_OK)
 

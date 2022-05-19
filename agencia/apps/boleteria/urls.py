@@ -10,6 +10,10 @@ urlpatterns = [
 
     path('api/ticket/list', apis_boleteria.ticket_api_view, name='api-ticket-list'),
     path('api/ticket/detail/<int:pk>/', apis_boleteria.ticket_detail_view, name='api-ticket-detail'),
+    
+    path('api/ticket/list/buy', apis_boleteria.list_tickets_for_buy, name='api-ticket-list-buy'),
+    path('api/ticket/list/sold', apis_boleteria.list_sold_tickets, name='api-ticket-list-sold'),
+    path('api/ticket/pay', apis_boleteria.pay_ticket, name='api-ticket-pay'),
 
-    path('bus/list/', view_boleteria.ticket_list, name='ticket-list'),
+    path('ticket/buy', view_boleteria.ticket_buy, name='ticket-buy'),
 ]

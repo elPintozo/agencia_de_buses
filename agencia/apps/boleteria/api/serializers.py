@@ -9,7 +9,6 @@ class PassengerSerializers(serializers.ModelSerializer):
         fields = '__all__'
 
 class TicketSerializers(serializers.ModelSerializer):
-    create_date = serializers.DateTimeField(format="%Y-%m-%d %H:%M:%S")
     class Meta:
         model = models.Ticket
         fields = '__all__'

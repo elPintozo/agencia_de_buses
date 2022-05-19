@@ -1,7 +1,7 @@
 import uuid
 from django.db import models
 from django.db.models.signals import pre_save
-from apps.flota.models import Route
+from apps.flota.models import BusRoute
 
 class Passenger(models.Model):
     passenger_id = models.CharField(max_length=100, null=False, blank=False, unique=True)
@@ -14,7 +14,7 @@ class Passenger(models.Model):
 class Ticket(models.Model):
     ticket_id = models.CharField(max_length=100, null=False, blank=False, unique=True)
     seat_number = models.IntegerField()
-    route = models.ForeignKey(Route, on_delete=models.CASCADE)
+    route = models.ForeignKey(BusRoute, on_delete=models.CASCADE)
     passenger = models.ForeignKey(Passenger, on_delete=models.CASCADE)
 
     class Meta:

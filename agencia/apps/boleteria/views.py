@@ -1,12 +1,12 @@
 from django.shortcuts import render
 
 # Create your views here.
-def ticket_list(request):
-    """Ticket list page"""
+def ticket_buy(request):
+    """Buy ticket page"""
 
     data = {
-        'title': 'Ticket list',
+        'title': 'Buy Ticket ',
         'nav_item':'ticket',
     }
 
-    return render(request, 'boleteria/ticket_list.html', data)
+    return render(request, 'boleteria/buy_ticket.html', data)
