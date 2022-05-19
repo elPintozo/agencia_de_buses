@@ -10,7 +10,6 @@
                     <th scope="col">ID internal</th>
                     <th scope="col">ID external</th>
                     <th scope="col">Route</th>
-                    <th scope="col">Create date</th>
                     <th scope="col">Action's</th>
                 </tr>
                 </thead>
@@ -19,7 +18,6 @@
                         <th scope="row">{$ route.id $}</th>
                         <td>{$ route.route_id $}</td>
                         <td>{$ route.name $}</td>
-                        <td>{$ route.create_date $}</td>
                         <td>
                             <button class="btn btn-primary btn-sm" v-on:click="assing_bus(route.id)">Assign bus</button>
                             <button class="btn btn-success btn-sm" v-on:click="get_assinged_buses(route.id)">Assigned buses</button>

@@ -54,6 +54,97 @@ def chauffeur_detail_view(request, pk: int=None):
     else:
         return Response({'message':"Don't found"}, status=status.HTTP_400_BAD_REQUEST)
 
+@api_view(['GET'])
+def chauffeur_assing_route(request, pk: int=None):
+    # queryset
+    chauffeur = models.Chauffeur.objects.filter(pk=pk).first()
+
+    # validation
+    if chauffeur:
+        exclude_route_list = models.BusRoute.objects.filter(chauffeur=chauffeur).values_list('route__name', flat=True)
+        available_routes = models.Route.objects.exclude(name__in=exclude_route_list)
+        available_routes_serializers = serializers.RouteSerializers(available_routes, many=True)
+        return Response(available_routes_serializers.data, status=status.HTTP_200_OK)
+
+    return Response({'message':"Don't chauffeur found"}, status=status.HTTP_400_BAD_REQUEST)
+
+@api_view(['GET'])
+def chauffeur_get_assinged_routes(request, pk: int=None):
+    # queryset
+    chauffeur = models.Chauffeur.objects.filter(pk=pk).first()
+
+    # validation
+    if chauffeur:
+        route_list = models.BusRoute.objects.filter(chauffeur=chauffeur).values_list('route__name', flat=True)
+        assinged_routes = models.Route.objects.filter(name__in=route_list)
+        assinged_routes_serializers = serializers.RouteSerializers(assinged_routes, many=True)
+        return Response(assinged_routes_serializers.data, status=status.HTTP_200_OK)
+
+    return Response({'message':"Don't chauffeur found"}, status=status.HTTP_400_BAD_REQUEST)
+
+@api_view(['GET'])
+def chauffeur_unassing_route(request, pk: int=None):
+    # queryset
+    chauffeur = models.Chauffeur.objects.filter(pk=pk).first()
+
+    # validation
+    if chauffeur:
+        buses_list = models.BusRoute.objects.filter(chauffeur=chauffeur).values_list('route__name', flat=True)
+        assinged_routes = models.Route.objects.filter(name__in=buses_list)
+        assinged_routes_serializers = serializers.RouteSerializers(assinged_routes, many=True)
+        return Response(assinged_routes_serializers.data, status=status.HTTP_200_OK)
+
+    return Response({'message':"Don't chauffeur found"}, status=status.HTTP_400_BAD_REQUEST)
+
+@api_view(['POST'])
+def chauffeur_add_route(request):
+
+    # validate keys
+    if 'chauffeur' in request.data.keys() and 'selected_route' in request.data.keys():
+
+        # get instances
+        chauffeur = models.Chauffeur.objects.filter(pk=int(request.data['chauffeur'])).first()
+        selected_route = models.Route.objects.filter(pk__in= request.data['selected_route'])
+
+        # check if route has a assing chauffeur
+        for route in selected_route:
+            bus_route = models.BusRoute.objects.filter(chauffeur=chauffeur, route=route)
+            if not bus_route:
+                new_bus_route = models.BusRoute()
+                new_bus_route.chauffeur = chauffeur
+                new_bus_route.route = route
+                new_bus_route.save()
+
+        return Response({'message:':'Assinged'}, status=status.HTTP_200_OK)
+
+    return Response({'message':"Don't chauffeur found"}, status=status.HTTP_400_BAD_REQUEST)
+
+@api_view(['POST'])
+def chauffeur_remove_route(request):
+    
+    # validate keys
+    if 'chauffeur' in request.data.keys() and 'selected_route' in request.data.keys():
+
+        # get instances
+        chauffeur = models.Chauffeur.objects.filter(pk=int(request.data['chauffeur'])).first()
+        selected_route = models.Route.objects.filter(pk__in= request.data['selected_route'])
+
+        # check if route has a assing bus
+        for route in selected_route:
+            bus_route = models.BusRoute.objects.filter(chauffeur=chauffeur, route=route)
+            if bus_route:
+                bus_route = bus_route.first()
+                bus_route.chauffeur = None
+                if bus_route.bus is None and bus_route.schedule is None:
+                    bus_route.delete()
+                else:
+                    bus_route.save()
+
+        return Response({'message:':'Assinged'}, status=status.HTTP_200_OK)
+
+    return Response({'message':"Don't chauffeur found"}, status=status.HTTP_400_BAD_REQUEST)
+
+
 @api_view(['GET', 'POST'])
 def bus_api_view(request):
 
@@ -151,7 +242,7 @@ def route_detail_view(request, pk: int=None):
         return Response({'message':"Don't found"}, status=status.HTTP_400_BAD_REQUEST)
 
 @api_view(['GET'])
-def assing_bus(request, pk: int=None):
+def route_assing_bus(request, pk: int=None):
     # queryset
     route = models.Route.objects.filter(pk=pk).first()
 
@@ -165,7 +256,7 @@ def assing_bus(request, pk: int=None):
     return Response({'message':"Don't route found"}, status=status.HTTP_400_BAD_REQUEST)
 
 @api_view(['GET'])
-def get_assinged_buses(request, pk: int=None):
+def route_get_assinged_buses(request, pk: int=None):
     # queryset
     route = models.Route.objects.filter(pk=pk).first()
 
@@ -179,7 +270,7 @@ def get_assinged_buses(request, pk: int=None):
     return Response({'message':"Don't route found"}, status=status.HTTP_400_BAD_REQUEST)
 
 @api_view(['GET'])
-def unassing_bus(request, pk: int=None):
+def route_unassing_bus(request, pk: int=None):
     # queryset
     route = models.Route.objects.filter(pk=pk).first()
 

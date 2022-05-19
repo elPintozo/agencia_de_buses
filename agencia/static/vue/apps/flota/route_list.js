@@ -27,9 +27,8 @@ new Vue({
             self.selected_route = route_id;
 
             axios.get('/garage/api/route/assing_bus/'+route_id+'/').then(function (response){
-                self.title = 'Assing bus'
+                self.title = 'Assing bus | Route ID '+route_id
                 self.bus_list = response.data
-                console.log(response.data)
             })
         },
         get_assinged_buses: function (route_id){
@@ -40,9 +39,8 @@ new Vue({
             self.selected_route = route_id;
 
             axios.get('/garage/api/route/get_assinged_buses/'+route_id+'/').then(function (response){
-                self.title = 'Assinged buses'
+                self.title = 'Assinged buses | Route ID '+route_id
                 self.bus_list = response.data
-                console.log(response.data)
             })
         },
         unassing_bus: function (route_id){
@@ -53,9 +51,8 @@ new Vue({
             self.selected_route = route_id;
 
             axios.get('/garage/api/route/unassing_bus/'+route_id+'/').then(function (response){
-                self.title = 'Unassing bus'
+                self.title = 'Unassing bus | Route ID '+route_id
                 self.bus_list = response.data
-                console.log(response.data)
             })
         },
         add_bus: function (){
@@ -65,8 +62,8 @@ new Vue({
                 'buses_selected': self.selected_buses
             }
             axios.post('/garage/api/route/add/bus/', data).then(function (response){
-                console.log(response.data)
                 self.selected_buses = []
+                self.get_assinged_buses(self.selected_route)
             })
             
         },
@@ -77,8 +74,8 @@ new Vue({
                 'buses_selected': self.selected_buses
             }
             axios.post('/garage/api/route/remove/bus/', data).then(function (response){
-                console.log(response.data)
                 self.selected_buses = []
+                self.get_assinged_buses(self.selected_route)
             })
         }
 
