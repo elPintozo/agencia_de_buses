@@ -42,21 +42,30 @@ in the input Content, you can copy and paste the next examples separately:
     - click post Button
   - Example bus 2: {"plate":"XYZA22"}
     - click post Button
+  - you can add id key in the data for update Bus
+  - you can see detail or delete register in the next link : http://127.0.0.1:8000/garage/api/bus/detail/{pk_bus}/
+
 Now you can back to the main page and click Buses tab and see the list of buses.
 
 You need to repeat this example for Chauffeur, Route and Schedule
 
 Link: http://127.0.0.1:8000/garage/api/chauffeur/list
-  - example 1: {"dni":"1111111-1"}
+  - example 1: {"dni":"1111111-1"} 
   - example 2: {"dni":"2222222-2"}
+    - you can add id key in the data for update Chauffeur
+    - you can see detail or delete register in the next link : http://127.0.0.1:8000/garage/api/chauffeur/detail/{pk_chauffeur}/    
 
 Link: http://127.0.0.1:8000/garage/api/route/list
   - example 1:{"name":"Santiago-Rancagua"}
   - example 2:{"name":"Rancagua-Santiago"}
+    - you can add id key in the data for update Route  
+    - you can see detail or delete register in the next link : http://127.0.0.1:8000/garage/api/route/detail/{pk_route}/
 
 Link: http://127.0.0.1:8000/garage/api/schedule/list
   - example 1:{"origin_date":"2022-05-20 15:00:00", "destination_date":"2022-05-20 20:30:00"}
   - example 2:{"origin_date":"2022-05-21 08:00:00", "destination_date":"2022-05-21 09:30:00"}
+    - you can add id key in the data for update Schedule 
+    - you can see detail or delete register in the next link : http://127.0.0.1:8000/garage/api/schedule/detail/{pk_schedule}/ 
 
 You have already generated enough information to make a trip.
 
