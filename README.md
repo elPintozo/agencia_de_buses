@@ -38,10 +38,10 @@ Platforms
 
 - http://127.0.0.1:8000/garage/api/bus/list
 in the input Content, you can copy and paste the next examples separately:
-Example bus 1: {"plate":"AABB11"}
-  - click post Button
-Example bus 2: {"plate":"XYZA22"}
-  - click post Button
+  - Example bus 1: {"plate":"AABB11"}
+    - click post Button
+  - Example bus 2: {"plate":"XYZA22"}
+    - click post Button
 Now you can back to the main page and click Buses tab and see the list of buses.
 
 You need to repeat this example for Chauffeur, Route and Schedule
