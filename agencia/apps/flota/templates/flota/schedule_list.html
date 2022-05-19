@@ -2,27 +2,60 @@
 {% load static %}
 
 {% block content %}
-    
-    <table class="table" id='app'>
-        <thead class="thead-dark">
-        <tr>
-            <th scope="col">ID internal</th>
-            <th scope="col">ID external</th>
-            <th scope="col">Origin date</th>
-            <th scope="col">Destination date</th>
-            <th scope="col">Create date</th>
-        </tr>
-        </thead>
-        <tbody>
-            <tr v-for="schedule in schedule_list" :key="schedule.id">
-                <th scope="row">{$ schedule.id $}</th>
-                <td>{$ schedule.schedule_id $}</td>
-                <td>{$ schedule.origin_date $}</td>
-                <td>{$ schedule.destination_date $}</td>
-                <td>{$ schedule.create_date $}</td>
-            </tr>
-        </tbody>
-    </table>
+    <div class="row" id='app'>
+        <div class="col-lg-6">
+            <table class="table" id='app'>
+                <thead class="thead-dark">
+                <tr>
+                    <th scope="col">ID internal</th>
+                    <th scope="col">ID external</th>
+                    <th scope="col">Origin date</th>
+                    <th scope="col">Destination date</th>
+                    <th scope="col">Action's</th>
+                </tr>
+                </thead>
+                <tbody>
+                    <tr v-for="schedule in schedule_list" :key="schedule.id">
+                        <th scope="row">{$ schedule.id $}</th>
+                        <td>{$ schedule.schedule_id $}</td>
+                        <td>{$ schedule.origin_date $}</td>
+                        <td>{$ schedule.destination_date $}</td>
+                        <td>
+                            <button class="btn btn-primary btn-sm" v-on:click="assing_route(schedule.id)">Assign route</button>
+                            <button class="btn btn-success btn-sm" v-on:click="get_assinged_routes(schedule.id)">Assigned routes</button>
+                            <button class="btn btn-danger btn-sm" v-on:click="unassing_route(schedule.id)">Unassign route</button>
+                        </td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+
+        <div class="col-lg-6">
+            <table class="table">
+                <thead>
+                    <tr>
+                        <th colspan="2">{$ title $}</th>
+                        <th>
+                            <button class="btn btn-success btn-sm" v-on:click="add_route()" v-if="show_btn_add">Add</button>
+                            <button class="btn btn-danger btn-sm" v-on:click="remove_route()" v-if="show_btn_remove">Remove</button>
+                        </th>
+                    </tr>
+                    <tr>
+                        <th scope="col">ID</th>
+                        <th scope="col">Route</th>
+                        <th scope="col" v-if='show_checkbox'>Select</th>
+                    </tr>
+                </thead>
+                <tbody>
+                  <tr v-for="route in route_list" :key="route.id">
+                    <th scope="row">{$ route.id $}</th>
+                    <td>{$ route.name $}</td>
+                    <td v-if='show_checkbox'> <input type="checkbox" v-model="selected_route" v-bind:value="route.id"> </td>
+                  </tr>
+                </tbody>
+              </table>
+        </div>
+    </div>
 
 {% endblock content %}
 

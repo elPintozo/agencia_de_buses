@@ -20,7 +20,7 @@ class BusSerializersCreate(serializers.ModelSerializer):
         fields = ['plate',]
 
 class BusSerializers(serializers.ModelSerializer):
-    #create_date = serializers.DateTimeField(format="%Y-%m-%d %H:%M:%S")
+    create_date = serializers.DateTimeField(format="%Y-%m-%d %H:%M:%S")
     class Meta:
         model = models.Bus
         fields = '__all__'
@@ -43,6 +43,8 @@ class ScheduleSerializersCreate(serializers.ModelSerializer):
 
 class ScheduleSerializers(serializers.ModelSerializer):
     create_date = serializers.DateTimeField(format="%Y-%m-%d %H:%M:%S")
+    origin_date = serializers.DateTimeField(format="%Y-%m-%d %H:%M:%S")
+    destination_date = serializers.DateTimeField(format="%Y-%m-%d %H:%M:%S")
     class Meta:
         model = models.Schedule
         fields = '__all__'
