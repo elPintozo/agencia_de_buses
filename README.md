@@ -72,6 +72,6 @@ Finally you can Buy a trip, go to the next page:
   - select a trip and click in buy button
   - put your dni or the any passenger
   - put you seat number between 1 to 10 
-  - clcik in pay button.
+  - click in pay button.
 
 
