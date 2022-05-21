@@ -171,7 +171,7 @@ def bus_api_view(request):
 def bus_detail_view(request, pk: int=None):
 
     # queryset
-    bus = models.bus.objects.filter(pk=pk).first()
+    bus = models.Bus.objects.filter(pk=pk).first()
 
     # validation
     if bus:
@@ -190,6 +190,7 @@ def bus_detail_view(request, pk: int=None):
                 return Response(bus_serializers.errors, status=status.HTTP_400_BAD_REQUEST)
         # delete
         elif request.method == 'DELETE':
+            models.BusRoute.remove_bus_association(bus)
             bus.delete()
             return Response({'message':'Deleted'}, status=status.HTTP_202_ACCEPTED)
     
@@ -252,7 +253,10 @@ def route_assing_bus(request, pk: int=None):
     # validation
     if route:
         exclude_buses_list = models.BusRoute.objects.filter(route=route).values_list('bus__plate', flat=True)
-        available_buses = models.Bus.objects.exclude(plate__in=exclude_buses_list)
+        if exclude_buses_list:
+            available_buses = models.Bus.objects.exclude(plate__in=exclude_buses_list)
+        else:
+            available_buses = models.Bus.objects.all()
         available_buses_serializers = serializers.BusSerializers(available_buses, many=True)
         return Response(available_buses_serializers.data, status=status.HTTP_200_OK)
 
@@ -266,7 +270,10 @@ def route_get_assinged_buses(request, pk: int=None):
     # validation
     if route:
         buses_list = models.BusRoute.objects.filter(route=route).values_list('bus__plate', flat=True)
-        assinged_buses = models.Bus.objects.filter(plate__in=buses_list)
+        if buses_list:
+            assinged_buses = models.Bus.objects.filter(plate__in=buses_list)
+        else:
+            assinged_buses = models.Bus.objects.all()
         assinged_buses_serializers = serializers.BusSerializers(assinged_buses, many=True)
         return Response(assinged_buses_serializers.data, status=status.HTTP_200_OK)
 
@@ -280,7 +287,10 @@ def route_unassing_bus(request, pk: int=None):
     # validation
     if route:
         buses_list = models.BusRoute.objects.filter(route=route).values_list('bus__plate', flat=True)
-        assinged_buses = models.Bus.objects.filter(plate__in=buses_list)
+        if buses_list:
+            assinged_buses = models.Bus.objects.filter(plate__in=buses_list)
+        else:
+            assinged_buses = models.Bus.objects.all()
         assinged_buses_serializers = serializers.BusSerializers(assinged_buses, many=True)
         return Response(assinged_buses_serializers.data, status=status.HTTP_200_OK)
 

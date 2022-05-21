@@ -10,6 +10,7 @@ new Vue({
         show_btn_add: false,
         show_btn_remove: false,
         show_checkbox:false,
+        new_name_for_route: '',
     },
     methods:{
         get_route_list: function (){
@@ -77,7 +78,17 @@ new Vue({
                 self.selected_buses = []
                 self.get_assinged_buses(self.selected_route)
             })
-        }
+        },
+        btn_add_new_route: function (){
+            var self = this;
+            var data = {
+                'name': self.new_name_for_route,
+            }
+            axios.post('/garage/api/route/list', data).then(function (response){
+                self.new_name_for_route = ''
+                self.get_route_list()
+            })
+        },
 
     },
     beforeMount(){

@@ -9,7 +9,12 @@ new Vue({
         title:'',
         show_btn_add: false,
         show_btn_remove: false,
-        show_checkbox:false,          
+        show_checkbox:false, 
+        
+        new_origin_schedule:'',
+        new_origin_time:'',
+        new_destination_schedule:'',
+        new_destination_time:'',
     },
     methods:{
         get_schedule_list: function (){
@@ -77,7 +82,22 @@ new Vue({
                 self.selected_route = []
                 self.get_assinged_routes(self.selected_schedule)
             })
-        }
+        },
+        btn_add_new_schedule: function (){
+            var self = this;
+            var data = {
+                'origin_date': self.new_origin_schedule+' '+self.new_origin_time,
+                'destination_date': self.new_destination_schedule+' '+self.new_destination_time
+            }
+
+            axios.post('/garage/api/schedule/list', data).then(function (response){
+                self.new_origin_schedule=''
+                self.new_origin_time=''
+                self.new_destination_schedule=''
+                self.new_destination_time=''
+                self.get_schedule_list()
+            })
+        },
     },
     beforeMount(){
         this.get_schedule_list()

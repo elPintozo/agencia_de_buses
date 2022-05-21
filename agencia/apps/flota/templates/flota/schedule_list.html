@@ -3,7 +3,30 @@
 
 {% block content %}
     <div class="row" id='app'>
+        <div class='col-lg-12 align-items-center'>
+            <h3>Add new Schedule</h3>
+            <div class="col-auto">
+                <label for="inputplate" class="col-form-label">Schedule origin</label>
+            </div>
+            <div class="col-auto">
+                <input type="date" v-model="new_origin_schedule" class="form-control">
+                <input type="time" v-model="new_origin_time" class="form-control">
+            </div>
+            <div class="col-auto">
+                <label for="inputplate" class="col-form-label">Schedule destination</label>
+            </div>
+            <div class="col-auto">
+                <input type="date" v-model="new_destination_schedule" class="form-control">
+                <input type="time" v-model="new_destination_time" class="form-control">
+            </div>
+            <div class="col-auto">
+                <button type="button" class="btn btn-primary" v-on:click="btn_add_new_schedule()">Add new Schedule</button>
+            </div>
+        </div> 
+
+
         <div class="col-lg-6">
+            <h3>Schedule list</h3>
             <table class="table" id='app'>
                 <thead class="thead-dark">
                 <tr>

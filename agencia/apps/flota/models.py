@@ -48,6 +48,15 @@ class BusRoute(models.Model):
     
     def __str__(self):
         return f"Route: {self.route}"
+    
+    def remove_bus_association(bus: Bus):
+        """Function that remove association between Bus and BusRoute model"""
+        
+        list_association = BusRoute.objects.filter(bus=bus)
+        for association in list_association:
+            association.bus = None
+            association.save()
+
 
 def set_chauffeur_id(sender, instance, *args, **kwargs):
     if not instance.chauffeur_id:

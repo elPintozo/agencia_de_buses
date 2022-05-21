@@ -3,7 +3,21 @@
 
 {% block content %}
     <div class="row" id='app'>
+        <div class='col-lg-12 align-items-center'>
+            <div class="col-auto">
+                <h3>Add new Chauffeur</h3>
+                <label for="inputplate" class="col-form-label">DNI</label>
+              </div>
+              <div class="col-auto">
+                <input type="text" v-model="new_dni_for_chauffeur" class="form-control" placeholder='12345678-9' maxlength="10">
+              </div>
+              <div class="col-auto">
+                <button type="button" class="btn btn-primary" v-on:click="btn_add_new_chauffeur()">Add new Chauffeur</button>
+              </div>
+        </div> 
+
         <div class="col-lg-6">
+            <h3>Chauffeurs list</h3>
             <table class="table" id='app'>
                 <thead class="thead-dark">
                 <tr>

@@ -3,7 +3,21 @@
 
 {% block content %}
     <div class="row" id='app'>
+        <div class='col-lg-12 align-items-center'>
+            <div class="col-auto">
+                <h3>Add new Route</h3>
+                <label for="inputplate" class="col-form-label">Route</label>
+              </div>
+              <div class="col-auto">
+                <input type="text" v-model="new_name_for_route" class="form-control" placeholder='Origin-destination' >
+              </div>
+              <div class="col-auto">
+                <button type="button" class="btn btn-primary" v-on:click="btn_add_new_route()">Add new Route</button>
+              </div>
+        </div> 
+
         <div class="col-lg-6">
+            <h3>Routes list</h3>
             <table class="table">
                 <thead class="thead-dark">
                 <tr>

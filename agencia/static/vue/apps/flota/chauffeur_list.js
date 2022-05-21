@@ -9,7 +9,8 @@ new Vue({
         title:'',
         show_btn_add: false,
         show_btn_remove: false,
-        show_checkbox:false,      
+        show_checkbox:false,
+        new_dni_for_chauffeur:'',
     },
     methods:{
         get_chauffeur_list: function (){
@@ -77,7 +78,17 @@ new Vue({
                 self.selected_route = []
                 self.get_assinged_routes(self.selected_chauffeur)
             })
-        }
+        },
+        btn_add_new_chauffeur: function (){
+            var self = this;
+            var data = {
+                'dni': self.new_dni_for_chauffeur,
+            }
+            axios.post('/garage/api/chauffeur/list', data).then(function (response){
+                self.new_dni_for_chauffeur = ''
+                self.get_chauffeur_list()
+            })
+        },
     },
     beforeMount(){
         this.get_chauffeur_list()
