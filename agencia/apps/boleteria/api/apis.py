@@ -1,6 +1,8 @@
+import copy
 from rest_framework import status
 from rest_framework.response import Response
 from rest_framework.decorators import api_view
+from django.db.models import Avg, Max, Min, Sum, Count
 
 from apps.boleteria import models as models_boleteria
 from apps.flota import models as models_flota
@@ -123,8 +125,12 @@ def pay_ticket(request):
     # validate keys
     if 'dni_passenger' in request.data.keys() and 'seat_number' in request.data.keys() and 'bus_route' in request.data.keys():
         dni_passenger =  models_boleteria.Passenger.objects.filter(dni=request.data['dni_passenger']).first()
+        
+        # validate seat number
+        if int(request.data['seat_number']) not in range(1,11):
+            return Response({'message':"Don't seat number valid."}, status=status.HTTP_400_BAD_REQUEST)
 
-        #Validate passenger
+        # Validate passenger
         if not dni_passenger:
             new_dni_passenger = models_boleteria.Passenger()
             new_dni_passenger.dni = request.data['dni_passenger']
@@ -151,4 +157,21 @@ def pay_ticket(request):
 
     return Response({'message':"Don't found"}, status=status.HTTP_400_BAD_REQUEST)
     
-    
+
+@api_view(['GET'])
+def average_of_passengers(request):
+
+    # get data
+    total = models_boleteria.Ticket.objects.aggregate(total=Count('id'))
+    if total['total']:
+        resume =  models_boleteria.Ticket.objects.values('route__route__name', 'route').annotate(count=Count('route'))
+        
+        # calculate data
+        delta = 100/total['total']
+        details = copy.deepcopy(resume)
+        for p in details:
+            p['average']= f"{p['count']*delta}%"
+        
+        return Response(details, status=status.HTTP_200_OK)
+
+    return Response({'message':"Don't data found"}, status=status.HTTP_400_BAD_REQUEST)

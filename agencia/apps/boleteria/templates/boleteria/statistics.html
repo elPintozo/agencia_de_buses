@@ -1,0 +1,52 @@
+{% extends 'base.html' %}
+{% load static %}
+
+{% block content %}
+    <div class="row" id='app'>
+        <div class="col-lg-8 offset-lg-2">
+            <nav>
+                <div class="nav nav-tabs" id="nav-tab" role="tablist">
+                  <button class="nav-link active" id="nav-home-tab" data-bs-toggle="tab" data-bs-target="#nav-home" type="button" role="tab" aria-controls="nav-home" aria-selected="true">
+                        List the journeys with their average number of passengers
+                  </button>
+                  <button class="nav-link" id="nav-profile-tab" data-bs-toggle="tab" data-bs-target="#nav-profile" type="button" role="tab" aria-controls="nav-profile" aria-selected="false">
+                        Percentage of buses per route
+                  </button>
+                </div>
+              </nav>
+              <div class="tab-content" id="nav-tabContent">
+                <div class="tab-pane fade show active" id="nav-home" role="tabpanel" aria-labelledby="nav-home-tab">
+                    <!-- tab 1 open -->
+                    <table class="table">
+                        <thead>
+                          <tr>
+                            <th scope="col">Route</th>
+                            <th scope="col">Trip ID</th>
+                            <th scope="col">Passengers total</th>
+                            <th scope="col">Average</th>
+                          </tr>
+                        </thead>
+                        <tbody>
+                          <tr v-for="data_1 in data_tab_1" :key="data_1.route">
+                            <th scope="row">{$ data_1.route__route__name $}</th>
+                            <td>{$ data_1.route $}</td>
+                            <td>{$ data_1.count $}</td>
+                            <td>{$ data_1.average $}</td>
+                          </tr>
+                        </tbody>
+                      </table>
+                    <!-- tab 1 closed -->
+                </div>
+                <div class="tab-pane fade" id="nav-profile" role="tabpanel" aria-labelledby="nav-profile-tab">
+                    <!-- tab 2 open -->
+                    <!-- tab 2 closed -->
+                </div>
+              </div>
+        </div>
+    </div>
+
+{% endblock content %}
+
+{% block js %}
+    <script src="{% static 'vue/apps/boleteria/statistics.js' %}" ></script>
+{% endblock js %}

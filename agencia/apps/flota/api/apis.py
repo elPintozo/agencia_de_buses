@@ -48,6 +48,9 @@ def chauffeur_detail_view(request, pk: int=None):
                 return Response(chauffeur_serializers.errors, status=status.HTTP_400_BAD_REQUEST)
         # delete
         elif request.method == 'DELETE':
+            registers = models_boleteria.BusRoute.objects.filter(chauffeur=chauffeur)
+            for register in registers:
+                register.chauffeur = None
             chauffeur.delete()
             return Response({'message':'Deleted'}, status=status.HTTP_202_ACCEPTED)
     
@@ -239,6 +242,9 @@ def route_detail_view(request, pk: int=None):
                 return Response(route_serializers.errors, status=status.HTTP_400_BAD_REQUEST)
         # delete
         elif request.method == 'DELETE':
+            registers = models_boleteria.BusRoute.objects.filter(route=route)
+            for register in registers:
+                register.route = None
             route.delete()
             return Response({'message':'Deleted'}, status=status.HTTP_202_ACCEPTED)
     
@@ -252,7 +258,7 @@ def route_assing_bus(request, pk: int=None):
 
     # validation
     if route:
-        exclude_buses_list = models.BusRoute.objects.filter(route=route).values_list('bus__plate', flat=True)
+        exclude_buses_list = models.BusRoute.objects.filter(route=route, bus__isnull=False).values_list('bus__plate', flat=True)
         if exclude_buses_list:
             available_buses = models.Bus.objects.exclude(plate__in=exclude_buses_list)
         else:
@@ -308,7 +314,7 @@ def route_add_bus(request):
 
         # check if route has a assing bus
         for bus in buses_selected:
-            bus_route = models.BusRoute.objects.filter(route=route)
+            bus_route = models.BusRoute.objects.filter(route=route, bus=bus)
             if not bus_route:
                 new_bus_route = models.BusRoute()
                 new_bus_route.bus = bus
@@ -390,6 +396,9 @@ def schedule_detail_view(request, pk: int=None):
                 return Response(schedule_serializers.errors, status=status.HTTP_400_BAD_REQUEST)
         # delete
         elif request.method == 'DELETE':
+            registers = models_boleteria.BusRoute.objects.filter(schedule=schedule)
+            for register in registers:
+                register.schedule = None
             schedule.delete()
             return Response({'message':'Deleted'}, status=status.HTTP_202_ACCEPTED)
     
