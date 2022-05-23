@@ -1,4 +1,6 @@
 import copy
+from unittest import result
+from apps.flota.views import route_list
 from rest_framework import status
 from rest_framework.response import Response
 from rest_framework.decorators import api_view
@@ -172,6 +174,33 @@ def average_of_passengers(request):
         for p in details:
             p['average']= f"{p['count']*delta}%"
         
+        return Response(details, status=status.HTTP_200_OK)
+
+    return Response({'message':"Don't data found"}, status=status.HTTP_400_BAD_REQUEST)
+
+@api_view(['POST'])
+def percentage_buses_route(request):
+
+    # validate keys
+    if 'selected_route' in request.data.keys() and 'percentage' in request.data.keys():
+        details =[]
+        list_buses =  models_flota.BusRoute.objects.filter(route__pk=int(request.data['selected_route'])).values('bus__plate')
+        list_pk_route = models_flota.BusRoute.objects.filter(route__pk=int(request.data['selected_route'])).values('bus','bus__plate')
+
+        for pk_bus in list_pk_route:
+            
+            if pk_bus['bus']:
+
+                sold_ticket = models_boleteria.Ticket.objects.filter(route__bus__pk=pk_bus['bus'])
+
+                if int(request.data['percentage']) <= (sold_ticket.count()*10):
+                    registro = {
+                        'plate':pk_bus['bus__plate'],
+                        'tickets':sold_ticket.count(),
+                        'average': f"{sold_ticket.count()*10}%"
+                    }
+                    details.append(registro) 
+
         return Response(details, status=status.HTTP_200_OK)
 
     return Response({'message':"Don't data found"}, status=status.HTTP_400_BAD_REQUEST)

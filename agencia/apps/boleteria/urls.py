@@ -18,4 +18,5 @@ urlpatterns = [
     path('ticket/buy', view_boleteria.ticket_buy, name='ticket-buy'),
     path('ticket/statistics', view_boleteria.statistics, name='statistics'),
     path('ticket/statistics/average', apis_boleteria.average_of_passengers, name='statistics-average'),
+    path('ticket/statistics/percentage', apis_boleteria.percentage_buses_route, name='statistics-percentage'),
 ]

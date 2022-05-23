@@ -39,6 +39,46 @@
                 </div>
                 <div class="tab-pane fade" id="nav-profile" role="tabpanel" aria-labelledby="nav-profile-tab">
                     <!-- tab 2 open -->
+                    <div class='row'>
+                        <div class='col-lg-4'>
+                            <form>
+                                <fieldset>
+                                  <legend>Select for filter</legend>
+                                  <div class="mb-3">
+                                    <label for="quantity" class="form-label">Route</label>
+
+                                    <select class="form-select" v-model="select" required>
+                                        <option v-for="option in select_route" v-bind:value="option.id">{$ option.name $}</option>
+                                    </select>
+
+                                  </div>
+                                  <div class="mb-3">
+                                    <label for="quantity" class="form-label">Percentage (1% to 100%)</label>
+                                    <input type="number" id="percentage" name="percentage" v-model="percentage" min="1" max="100" required>
+                                  </div>
+                                  <button type="button" class="btn btn-primary" v-on:click="btn_buscar_buses()">Search</button>
+                                </fieldset>
+                              </form>
+                        </div>
+                        <div class='col-lg-8'>
+                            <table class="table">
+                                <thead>
+                                  <tr>
+                                    <th scope="col">Plate</th>
+                                    <th scope="col">Tickets</th>
+                                    <th scope="col">Average</th>
+                                  </tr>
+                                </thead>
+                                <tbody>
+                                  <tr v-for="p in percentage_list" :key="p.plate">
+                                    <td>{$ p.plate $}</td>
+                                    <td>{$ p.tickets $}</td>
+                                    <td>{$ p.average $}</td>
+                                  </tr>
+                                </tbody>
+                              </table>
+                        </div>
+                    </div>
                     <!-- tab 2 closed -->
                 </div>
               </div>
